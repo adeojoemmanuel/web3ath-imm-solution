@@ -8,5 +8,4 @@
 
 - https://mumbai.polygonscan.com/
 
-- **Main - Web3Auth**
-  ![Web3 Auth](web3Auth.png)
+
