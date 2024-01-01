@@ -74,7 +74,7 @@ function App() {
           getAccounts();
         }
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
 
