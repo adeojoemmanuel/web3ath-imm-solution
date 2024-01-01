@@ -44,17 +44,17 @@ describe('RPC', () => {
           getAccounts: jest.fn(() => Promise.resolve(['0xUserAddress'])),
           getBalance: jest.fn(() => Promise.resolve('1000000000000000000')), // 1 ether in wei
         },
-        utils: { fromWei: jest.fn((value) => value / 10^18) },
+        utils: { fromWei: jest.fn((value) => value) },
       };
 
       Web3.mockImplementation(() => mockWeb3Instance);
 
       const result = await rpc.getBalance();
       
-      const balance = await mockWeb3Instance.utils.fromWei(result);
+      const balance = Number(result / 1e18);
 
 
-      expect(balance).toBe('1');
+      expect(balance).toBe(1);
       expect(mockWeb3Instance.eth.getAccounts).toHaveBeenCalled();
       expect(mockWeb3Instance.eth.getBalance).toHaveBeenCalledWith('0xUserAddress');
       expect(mockWeb3Instance.utils.fromWei).toHaveBeenCalledWith('1000000000000000000');
