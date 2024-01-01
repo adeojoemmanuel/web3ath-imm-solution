@@ -73,13 +73,44 @@ describe('RPC', () => {
     });
   });
 
-//   describe('sendTransaction', () => {
-//     // Write your test cases for sendTransaction
-//   });
+  describe('sendTransaction', () => {
+    it('should send a transaction and return the receipt', async () => {
+      const mockWeb3Instance = {
+        eth: {
+          getAccounts: jest.fn(() => Promise.resolve(['0xUserAddress'])),
+          sendTransaction: jest.fn(() => Promise.resolve({ transactionHash: 'txHash' })),
+        },
+        utils: { toWei: jest.fn((value) => value) },
+      };
 
-//   describe('sendContractTransaction', () => {
-//     // Write your test cases for sendContractTransaction
-//   });
+      Web3.mockImplementation(() => mockWeb3Instance);
+
+      const result = await rpc.sendTransaction();
+
+      expect(result).toEqual({ transactionHash: 'txHash' });
+      expect(mockWeb3Instance.eth.getAccounts).toHaveBeenCalled();
+      expect(mockWeb3Instance.eth.sendTransaction).toHaveBeenCalledWith({
+        from: '0xUserAddress',
+        to: '0x5FD22e75d105DD4640eE5c9b862722010B7F273A',
+        value: parseFloat(1000000000000000 / 1e18),
+        maxPriorityFeePerGas: '5000000000',
+        maxFeePerGas: '6000000000000',
+      });
+    });
+
+    it('should handle errors and return them', async () => {
+      const mockWeb3Instance = {
+        eth: { getAccounts: jest.fn(() => Promise.reject('Error')) },
+      };
+
+      Web3.mockImplementation(() => mockWeb3Instance);
+
+      const result = await rpc.sendTransaction();
+
+      expect(result).toBe('Error');
+    });
+  });
+
 
   describe('getPrivateKey', () => {
     it('should return the private key', async () => {

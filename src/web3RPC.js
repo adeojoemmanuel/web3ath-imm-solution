@@ -63,7 +63,7 @@ export default class RPC {
       const receipt = await web3.eth.sendTransaction({
         from: fromAddress,
         to: destination,
-        value: amount,
+        value: parseFloat(amount),
         maxPriorityFeePerGas: "5000000000", // Max priority fee per gas
         maxFeePerGas: "6000000000000", // Max fee per gas
       });
