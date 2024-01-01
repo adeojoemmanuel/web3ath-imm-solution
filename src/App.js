@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Web3Auth } from "@web3auth/modal";
 import { CHAIN_NAMESPACES } from "@web3auth/base";
-import { RPC_URL, CHAIN_ID, CLIENT_ID, CHAIN_EXPLORER} from "./config";
-import RPC from "./web3RPC";
+import { RPC_URL, CHAIN_ID, CLIENT_ID, CHAIN_EXPLORER} from "./config/config.js";
+import RPC from "./web3RPC/web3RPC";
 import "./App.css";
 
 let styles = {
